@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Gospodarstwo"><link rel="apple-touch-icon" href="icon.png"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%8C%BE%3C/text%3E%3C/svg%3E"><title>Moje gospodarstwo</title>
+<style>
+:root{color-scheme:light dark;--bg:#fcf8ef;--bgi:none;--card:#fffdf8;--tx:#191919;--mut:#6f6249;--ac:#191919;--acs:rgba(204,169,116,.35);--bd:#e6d9bd;--warn:#191919;--gold:#191919;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#111111;--bgi:none;--card:#191919;--tx:#d2d2d2;--mut:#8c8c8c;--ac:#CCA974;--gold:#CCA974;--acs:rgba(204,169,116,.14);--bd:#262626;--warn:#CCA974}
+:root[data-theme="light"]{color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111111;--bgi:none;--card:#191919;--tx:#d2d2d2;--mut:#8c8c8c;--ac:#CCA974;--gold:#CCA974;--acs:rgba(204,169,116,.14);--bd:#262626;--warn:#CCA974}}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+body{margin:0;background:var(--bg) var(--bgi) no-repeat fixed;color:var(--tx);-webkit-font-smoothing:antialiased;font:16px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Inter,"Segoe UI",system-ui,sans-serif}
+h1,h2{font-weight:300;margin:0;letter-spacing:-.01em}
+.app{max-width:760px;margin:0 auto;padding:20px 16px 130px}
+header{display:flex;justify-content:center;align-items:baseline;margin-bottom:18px}
+h1{font-size:28px;text-align:center}h1,.v{color:var(--gold)}.sub{color:var(--mut);font-size:14px}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:2px;padding:10px 12px calc(28px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--bd)}
+nav button{flex:1;max-width:200px;border:0;background:none;color:var(--mut);padding:10px 0;border-radius:12px;font:inherit;font-size:12px;cursor:pointer}
+nav button.on{background:var(--acs);color:var(--ac);font-weight:600}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px 16px}
+.k{color:var(--mut);font-size:13px}.v{font-weight:300;font-size:26px;margin-top:2px}.v small{font-size:14px;color:var(--mut)}
+h2{font-size:19px;margin:22px 0 10px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer}
+.row+.row{margin-top:8px}.row b{font-weight:500}.mut{color:var(--mut);font-size:14px}
+.bar{height:6px;background:var(--acs);border-radius:4px;margin-top:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac)}
+.pill{font-size:12px;padding:2px 9px;border-radius:99px;background:var(--acs);color:var(--ac)}.pill.p{background:transparent;border:1px solid var(--mut);color:var(--mut)}
+
+.add{width:100%;border:1.5px dashed var(--bd);background:none;color:var(--ac);padding:12px;border-radius:14px;font:inherit;cursor:pointer;margin-top:10px}
+.rates{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+label{display:block;font-size:13px;color:var(--mut)}
+input,select,textarea{width:100%;font:inherit;font-size:16px!important;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:9px 10px;margin:4px 0 10px}
+dialog{border:0;border-radius:18px;background:var(--card);color:var(--tx);width:min(420px,92vw);padding:20px}
+dialog::backdrop{background:rgba(0,0,0,.4)}
+.btns{display:flex;gap:8px;justify-content:flex-end}
+.btns button{border:0;border-radius:10px;padding:9px 16px;font:inherit;cursor:pointer;background:var(--acs);color:var(--ac)}
+.btns .pr{background:var(--ac);color:var(--bg)}.btns .del{margin-right:auto;background:none;color:#b3402f}
+.empty{text-align:center;color:var(--mut);padding:26px 0}
+.grp{padding:0;margin-bottom:10px}.grp summary{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;cursor:pointer;list-style:none;font-size:17px}.grp summary::-webkit-details-marker{display:none}
+.item{padding:12px 16px;border-top:1px solid var(--bd);margin-top:0!important}.grp .add{margin:10px 16px 14px;width:calc(100% - 32px)}
+.gear{border:0;background:var(--acs);color:var(--ac);width:34px;height:34px;border-radius:10px;font-size:16px;cursor:pointer;flex:none}
+.chk{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)}
+.dn{text-decoration:line-through;color:var(--mut)}
+.ed{border:0;background:none;box-shadow:none;color:var(--mut);width:32px;height:32px;padding:0;cursor:pointer;display:grid;place-items:center}
+.ed svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+</style></head>
+<body><div class="app"><header><h1 id="ttl">Moje gospodarstwo</h1></header><main id="m"></main></div>
+<nav><button data-v="home">Przegląd</button><button data-v="parcels">Działki</button><button data-v="crops">Uprawy</button><button data-v="buildings">Budynki</button><button data-v="grants">Dotacje</button><button data-v="settings">Ustawienia</button></nav>
+<dialog id="d"><form method="dialog" id="f"></form></dialog>
+<script>
+const K='gosp-v1',Y=new Date().getFullYear();
+let S={name:'Moje gospodarstwo',parcels:[],buildings:[],crops:[],todos:[],payments:[],grants:[],rates:{base:460,redis:170,limit:30}},view='home';
+try{const r=localStorage.getItem(K);if(r){const o=JSON.parse(r);if(!o.payments&&o.rates)o.payments=[{id:'p1',name:'Płatność podstawowa',rate:+o.rates.base||0},{id:'p2',name:'Płatność redystrybucyjna',rate:+o.rates.redis||0,limit:+o.rates.limit||''}];S=Object.assign(S,o)}}catch(e){}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const n=x=>(+x||0).toLocaleString('pl-PL',{maximumFractionDigits:2});
+const zl=x=>(+x||0).toLocaleString('pl-PL',{style:'currency',currency:'PLN',maximumFractionDigits:0});
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+
+const CROPS=['Pszenica','Jęczmień','Żyto','Kukurydza','Rzepak','Ziemniaki','Buraki','Łąka / pastwisko','Ugór','Inna'];
+const STAT=['otrzymana','planowana'];
+
+function totals(){
+ const area=S.parcels.reduce((a,p)=>a+(+p.area||0),0),r=S.rates;
+ const fc=(S.payments||[]).reduce((a,x)=>a+(+x.rate||0)*Math.min(area,+x.limit>0?+x.limit:area),0);
+ return{area,fc,perHa:area?fc/area:0};
+}
+const bCost=b=>(b.costs||[]).reduce((a,c)=>a+(+c.c||0),0);
+const money=()=>{const s=k=>S.parcels.reduce((a,p)=>a+(+p[k]||0),0),bc=S.buildings.reduce((a,b)=>a+bCost(b),0);const pvf=p=>(+p.indiv>0)?+p.indiv:(+p.area||0)*(+S.rates.market||0),pv=S.parcels.reduce((a,p)=>a+pvf(p),0);return{pv,pb:s('buy'),bc,value:pv+bc,inv:s('buy')+bc,sale:S.parcels.filter(p=>p.sale==='Tak').reduce((a,p)=>a+pvf(p),0)}};
+function goals(id){const g=S.grants.find(x=>x.id===id),f=document.getElementById('f'),d=document.getElementById('d');g.goals=g.goals||[];
+ const draw=()=>{f.innerHTML=`<h2 style='margin-top:0'>Cele</h2><div class='mut' style='margin-bottom:10px'>${esc(g.name)}</div>`+g.goals.map((x,i)=>`<div class='chk'><label style='display:flex;gap:10px;align-items:center;flex:1;color:var(--tx);font-size:16px'><input type='checkbox' style='width:auto;margin:0' class='cb' data-i='${i}' ${x.d?'checked':''}><span class='${x.d?'dn':''}'>${esc(x.t)}</span></label><button type='button' class='gear' data-r='${i}'>✕</button></div>`).join('')+`<div style='display:flex;gap:8px;margin-top:8px'><input id='nt' placeholder='Nowy cel' style='margin:0'><button type='button' class='gear' id='na' style='font-size:22px'>+</button></div><div class='btns' style='margin-top:14px'><button class='pr' value='ok'>Gotowe</button></div>`;
+  f.querySelectorAll('.cb').forEach(c=>c.onchange=()=>{g.goals[c.dataset.i].d=c.checked;save();draw()});
+  f.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{g.goals.splice(b.dataset.r,1);save();draw()});
+  f.querySelector('#na').onclick=add};
+ const add=()=>{const i=f.querySelector('#nt'),v=i.value.trim();if(v){g.goals.push({t:v,d:false});save();draw();f.querySelector('#nt').focus()}};
+ f.onsubmit=null;f.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();if(e.target.id==='nt')add()}};
+ d.addEventListener('close',render,{once:true});draw();d.showModal()}
+function bld(id){const src=S.buildings.find(x=>x.id===id),b=src?JSON.parse(JSON.stringify(src)):{id:uid(),name:'',costs:[]},f=document.getElementById('f'),d=document.getElementById('d');
+ const keep=()=>{b.name=f.querySelector('#bn').value};
+ const add=()=>{keep();const n=f.querySelector('#cn').value.trim(),c=+f.querySelector('#cc').value||0;if(n){b.costs.push({n,c});draw();f.querySelector('#cn').focus()}};
+ const draw=()=>{f.innerHTML=`<h2 style='margin-top:0'>${src?'Edytuj budynek':'Nowy budynek'}</h2><label>Nazwa<input id='bn' value='${esc(b.name)}'></label><label>Lista kosztów</label>`+b.costs.map((c,i)=>`<div class='chk'><span style='flex:1'>${esc(c.n)}</span><span class='mut'>${zl(c.c)}</span><button type='button' class='gear' data-r='${i}'>✕</button></div>`).join('')+`<div style='display:flex;gap:8px;margin-top:8px'><input id='cn' placeholder='Co (np. fundamenty)' style='margin:0'><input id='cc' type='number' placeholder='zł' style='margin:0;width:100px'><button type='button' class='gear' id='ca' style='font-size:22px'>+</button></div><div class='v' style='font-size:18px;margin:12px 0'>Razem: ${zl(bCost(b))}</div><div class='btns'>${src?"<button type='button' class='del' id='x'>Usuń</button>":''}<button value='c'>Anuluj</button><button class='pr' value='ok'>Zapisz</button></div>`;
+  f.querySelectorAll('[data-r]').forEach(x=>x.onclick=()=>{keep();b.costs.splice(x.dataset.r,1);draw()});
+  f.querySelector('#ca').onclick=add;
+  if(src)f.querySelector('#x').onclick=()=>{S.buildings=S.buildings.filter(x=>x.id!==id);save();d.close();render()}};
+ f.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();if(e.target.id==='cn'||e.target.id==='cc')add()}};
+ f.onsubmit=e=>{if(e.submitter&&e.submitter.value==='ok'){add();b.name=b.name.trim()||'Budynek';src?Object.assign(src,b):S.buildings.push(b);save();render()}};
+ draw();d.showModal()}
+const bkData=()=>JSON.stringify(S,null,1);
+const bkMsg=t=>{const e=document.getElementById('bmsg');if(e)e.textContent=t};
+const bkStamp=()=>{S.lastBackup=Date.now();save();render()};
+async function bkFile(){try{const dl=typeof claude!=='undefined'?await claude.use('downloads'):null;if(!dl){bkMsg('Zapis pliku niedostępny. Użyj „Kopiuj dane”.');return}
+ await dl.save({filename:'gospodarstwo-'+new Date().toISOString().slice(0,10)+'.json',data:bkData()});bkStamp();bkMsg('Kopia zapisana.')}catch(e){bkMsg(e&&e.code==='declined'?'Anulowano.':'Nie udało się zapisać pliku. Użyj „Kopiuj dane”.')}}
+async function bkCopy(){const t=bkData();try{await navigator.clipboard.writeText(t);bkStamp();bkMsg('Skopiowano. Wklej do notatek lub maila.')}catch(e){const a=document.getElementById('bkt');a.value=t;a.select();bkMsg('Zaznacz i skopiuj tekst z pola powyżej.')}}
+function bkLoad(f){if(!f)return;const r=new FileReader();r.onload=()=>{document.getElementById('bkt').value=r.result;bkMsg('Plik wczytany. Kliknij „Importuj”.')};r.readAsText(f)}
+function bkImport(){try{const o=JSON.parse(document.getElementById('bkt').value);if(!Array.isArray(o.parcels)||!Array.isArray(o.grants))throw 0;S=Object.assign({name:'Moje gospodarstwo',parcels:[],buildings:[],crops:[],todos:[],grants:[],rates:{base:460,redis:170,limit:30}},o);save();render();bkMsg('Dane zaimportowane.')}catch(e){bkMsg('To nie wygląda na poprawną kopię danych.')}}
+function editPay(id){S.payments=S.payments||[];const x=S.payments.find(y=>y.id===id)||{};openForm(id?'Edytuj dopłatę':'Nowa dopłata',[{k:'name',l:'Nazwa dopłaty'},{k:'rate',l:'Stawka (zł/ha)',t:'number'},{k:'limit',l:'Limit powierzchni (ha). Puste = cała powierzchnia',t:'number'}],x,o=>{o.rate=+o.rate||0;o.limit=+o.limit||'';o.name=(o.name||'').trim()||'Dopłata';id?Object.assign(x,o):S.payments.push({id:uid(),...o})},id?()=>{S.payments=S.payments.filter(y=>y.id!==id)}:null)}
+function editC(id){const c=S.crops.find(x=>x.id===id)||{};openForm(id?'Edytuj uprawę':'Nowa uprawa',[{k:'name',l:'Uprawa'},{k:'area',l:'Powierzchnia (ha)',t:'number'}],c,o=>{o.area=+o.area||0;o.name=(o.name||'').trim()||'Uprawa';id?Object.assign(c,o):S.crops.push({id:uid(),...o})},id?()=>{S.crops=S.crops.filter(x=>x.id!==id)}:null)}
+function crops(){const t=S.crops.reduce((a,c)=>a+(+c.area||0),0);return `<div class="mut" style="margin-bottom:10px">Razem uprawy: ${n(t)} ha</div>`+(S.crops.length?S.crops.map(c=>`<div class="card row" onclick="editC('${c.id}')"><b>${esc(c.name)}</b><div class="v" style="font-size:20px">${n(c.area)} <small>ha</small></div></div>`).join(''):'<div class="empty">Brak upraw. Dodaj pierwszą.</div>')+'<button class="add" onclick="editC()">+ Dodaj uprawę</button>'}
+function todoAdd(){const i=document.getElementById('tn'),v=i.value.trim();if(!v)return;S.todos.push({t:v,d:false});save();render();document.getElementById('tn').focus()}
+const todoTog=i=>{S.todos[i].d=!S.todos[i].d;save();render()};
+const todoDel=i=>{S.todos.splice(i,1);save();render()};
+function buildings(){return (S.buildings.length?S.buildings.map(b=>`<div class="card row" onclick="bld('${b.id}')"><div><b>${esc(b.name)}</b><div class="mut">pozycji kosztów: ${(b.costs||[]).length}</div></div><div class="v" style="font-size:20px">${zl(bCost(b))}</div></div>`).join(''):'<div class="empty">Brak budynków. Dodaj pierwszy.</div>')+'<button class="add" onclick="bld()">+ Dodaj budynek</button>'}
+function openForm(title,fields,vals,onSave,onDel){
+ const f=document.getElementById('f');
+ f.innerHTML='<h2 style="margin-top:0">'+title+'</h2>'+fields.map(x=>{
+  const v=vals[x.k]??'';
+  if(x.opts)return `<label>${x.l}<select name="${x.k}">${x.opts.map(o=>`<option ${o==v?'selected':''}>${esc(o)}</option>`).join('')}</select></label>`;
+  if(x.t==='area')return `<label>${x.l}<textarea name="${x.k}" rows="2">${esc(v)}</textarea></label>`;
+  return `<label>${x.l}<input name="${x.k}" type="${x.t||'text'}" step="any" value="${esc(v)}"></label>`}).join('')
+  +`<div class="btns">${onDel?'<button type="button" class="del" id="x">Usuń</button>':''}<button value="c">Anuluj</button><button class="pr" value="ok">Zapisz</button></div>`;
+ const d=document.getElementById('d');
+ f.onkeydown=null;f.onsubmit=e=>{if(e.submitter&&e.submitter.value==='ok'){const o={};new FormData(f).forEach((v,k)=>o[k]=v);onSave(o);save();render()}};
+ if(onDel)document.getElementById('x').onclick=()=>{onDel();save();d.close();render()};
+ d.showModal();
+}
+const PF=[{k:'name',l:'Nazwa / numer działki'},{k:'type',l:'Rodzaj',opts:['rolna','budowlana']},{k:'area',l:'Powierzchnia (ha)',t:'number'},{k:'buy',l:'Cena zakupu (zł)',t:'number'},{k:'sale',l:'Do potencjalnej sprzedaży',opts:['Nie','Tak']},{k:'indiv',l:'Wycena indywidualna (zł). Zostaw puste, by liczyć wg ceny za ha',t:'number'},{k:'notes',l:'Notatki',t:'area'}];
+const GF=[{k:'name',l:'Nazwa dotacji'},{k:'amount',l:'Kwota (zł)',t:'number'},{k:'status',l:'Status',opts:STAT},{k:'year',l:'Rok',t:'number'},{k:'notes',l:'Notatki',t:'area'}];
+function editP(id,type){const p=S.parcels.find(x=>x.id===id)||{type:type||'rolna'};
+ openForm(id?'Edytuj działkę':'Nowa działka',PF,p,o=>{o.area=+o.area||0;o.buy=+o.buy||0;o.indiv=+o.indiv||'';id?Object.assign(p,o):S.parcels.push({id:uid(),...o})},id?()=>{S.parcels=S.parcels.filter(x=>x.id!==id)}:null)}
+function editG(id,st){const g=S.grants.find(x=>x.id===id)||{status:st||'planowana',year:Y};
+ openForm(id?'Edytuj dotację':'Nowa dotacja',GF,g,o=>{o.amount=+o.amount||0;o.year=+o.year||Y;id?Object.assign(g,o):S.grants.push({id:uid(),...o})},id?()=>{S.grants=S.grants.filter(x=>x.id!==id)}:null)}
+function setRate(k,v){S.rates[k]=+v||0;save();render()}
+
+function home(){
+ const t=totals(),by={};S.crops.forEach(c=>by[c.name]=(by[c.name]||0)+(+c.area||0));const ca=S.crops.reduce((a,c)=>a+(+c.area||0),0)||1;
+ const rec=S.grants.filter(g=>g.status==='otrzymana').reduce((a,g)=>a+g.amount,0);const M=money();
+ return `<div class="grid">
+ <div class="card" style="grid-column:span 2"><div class="k">Powierzchnia razem</div><div class="v">${n(t.area)} <small>ha</small></div></div>
+ 
+ <div class="card"><div class="k">Prognoza dopłat bezpośrednich</div><div class="v">${zl(t.fc)}</div></div>
+ 
+ <div class="card"><div class="k">Dotacje otrzymane</div><div class="v">${zl(rec)}</div></div>
+ <div class="card"><div class="k">Zainwestowano w grunty</div><div class="v">${zl(M.pb)}</div></div>
+ <div class="card"><div class="k">Zainwestowano w gospodarstwo</div><div class="v">${zl(M.inv)}</div><div class="mut">z budynkami</div></div>
+ <div class="card"><div class="k">Wartość gruntów</div><div class="v">${zl(M.pv)}</div><div class="mut">${S.rates.market>0?'powierzchnia × cena za ha':'ustaw cenę za ha w Ustawieniach'}</div></div>
+ <div class="card"><div class="k">Wartość gospodarstwa</div><div class="v">${zl(M.value)}</div><div class="mut">z budynkami</div></div>
+ 
+ 
+ <div class="card" style="grid-column:span 2"><div class="k">Działki do potencjalnej sprzedaży</div><div class="v">${zl(M.sale)}</div><div class="mut">${S.rates.market>0?'wg ceny rynkowej '+zl(S.rates.market)+' / ha':'ustaw cenę rynkową w Ustawieniach'}</div></div></div>
+ <h2>Do zrobienia</h2><div class="card">${S.todos.map((x,i)=>`<div class="chk"><label style="display:flex;gap:10px;align-items:center;flex:1;color:var(--tx);font-size:16px"><input type="checkbox" style="width:auto;margin:0" ${x.d?'checked':''} onchange="todoTog(${i})"><span class="${x.d?'dn':''}">${esc(x.t)}</span></label><button class="gear" onclick="todoDel(${i})">✕</button></div>`).join('')}<div style="display:flex;gap:8px;margin-top:8px"><input id="tn" placeholder="Co trzeba zrobić?" style="margin:0" onkeydown="if(event.key==='Enter')todoAdd()"><button class="gear" style="font-size:22px" onclick="todoAdd()">+</button></div></div>
+ <h2>Struktura upraw</h2><div class="card">${Object.keys(by).length?Object.entries(by).sort((a,b)=>b[1]-a[1]).map(([c,a])=>`<div style="margin-bottom:10px"><div class="row" style="cursor:default"><span>${esc(c)}</span><span class="mut">${n(a)} ha · ${n(a/ca*100)}%</span></div><div class="bar"><i style="width:${a/ca*100}%"></i></div></div>`).join(''):'<div class="empty">Dodaj uprawy w zakładce Uprawy.</div>'}</div>
+`;}
+function settings(){return `<h2 style="margin-top:0">Nazwa gospodarstwa</h2><div class="card"><input style="margin:0" value="${esc(S.name)}" onchange="S.name=this.value.trim()||'Moje gospodarstwo';save();render()"></div>
+ <h2>Motyw</h2><div class="card"><select style="margin:0" onchange="S.theme=this.value;save();render()"><option value="auto" ${(S.theme||'auto')==='auto'?'selected':''}>Automatyczny (jak w telefonie)</option><option value="light" ${S.theme==='light'?'selected':''}>Jasny</option><option value="dark" ${S.theme==='dark'?'selected':''}>Ciemny</option></select></div>
+ <h2>Rynkowa cena gruntów</h2><div class="card"><label>Cena za 1 ha (zł)<input type="number" value="${S.rates.market||''}" onchange="setRate('market',this.value)"></label><div class="mut">Wartość działki = powierzchnia × ta cena, chyba że ma wycenę indywidualną.</div></div>
+ <h2>Dopłaty do hektara</h2><details class="card grp" ${openT.pay?'open':''} ontoggle="openT.pay=this.open"><summary><b>Lista dopłat</b><span class="mut">razem ${zl((S.payments||[]).reduce((a,x)=>a+(+x.rate||0),0))} / ha ▾</span></summary>${(S.payments||[]).map(x=>`<div class="row item" onclick="editPay('${x.id}')"><div><b>${esc(x.name)}</b><div class="mut">${x.limit>0?'do '+n(x.limit)+' ha':'cała powierzchnia'}</div></div><div class="v" style="font-size:18px">${zl(x.rate)} <small>/ha</small></div></div>`).join('')||'<div class="empty" style="padding:12px">Brak dopłat</div>'}<button class="add" onclick="editPay()">+ Dodaj dopłatę</button><div class="mut" style="padding:0 16px 14px">Prognoza = suma (stawka × powierzchnia, do limitu). Powierzchnia: ${n(totals().area)} ha.</div></details><h2 style="display:none">
+ 
+ 
+ 
+ </h2>
+ <h2>Kopia zapasowa</h2><div class="card"><div class="mut" style="margin-bottom:10px">Ostatnia kopia: ${S.lastBackup?new Date(S.lastBackup).toLocaleDateString('pl-PL'):'jeszcze nie robiono'}</div>
+ <div class="btns" style="justify-content:flex-start;flex-wrap:wrap"><button onclick="bkCopy()">Kopiuj dane do schowka</button></div>
+ 
+ <label style="margin-top:14px">Wklej skopiowane dane<textarea id="bkt" rows="3"></textarea></label>
+ <div class="btns" style="justify-content:flex-start"><button class="pr" onclick="bkImport()">Importuj</button></div>
+ <div class="mut" id="bmsg" style="margin-top:8px">Import zastępuje obecne dane.</div></div>`;
+}
+let openT={};
+function parcels(){const M=money(),item=p=>`<div class="row item" onclick="editP('${p.id}')"><div><b>${esc(p.name)}</b><div class="mut">${p.buy?'zakup '+zl(p.buy):'brak ceny zakupu'}${p.indiv>0?' · wycena '+zl(p.indiv):''}${p.sale==='Tak'?' · do sprzedaży':''}</div></div><div class="v" style="font-size:20px">${n(p.area)} <small>ha</small></div></div>`,
+ grp=(k,t)=>{const l=S.parcels.filter(p=>(p.type||'rolna')===k),a=l.reduce((s,p)=>s+(+p.area||0),0);return `<details class="card grp" ${openT[k]?'open':''} ontoggle="openT['${k}']=this.open"><summary><b>${t}</b><span class="mut">${l.length} · ${n(a)} ha ▾</span></summary>${l.map(item).join('')||'<div class="empty" style="padding:12px">Brak działek</div>'}<button class="add" onclick="editP(null,'${k}')">+ Dodaj działkę</button></details>`};
+ return `<div class="mut" style="margin-bottom:10px">Zakup razem: ${zl(M.pb)}</div>`+grp('rolna','Rolne')+grp('budowlana','Budowlane')}
+function parcelsOld(){
+ const M=money();return `<div class="mut" style="margin-bottom:10px">Zakup razem: ${zl(M.pb)}</div>`+(S.parcels.length?S.parcels.map(p=>`<div class="card row" onclick="editP('${p.id}')"><div><b>${esc(p.name)}</b><div class="mut">${p.buy?'zakup '+zl(p.buy):'brak ceny zakupu'}${p.sale==='Tak'?' · do sprzedaży':''}</div></div><div class="v" style="font-size:20px">${n(p.area)} <small>ha</small></div></div>`).join(''):'<div class="empty">Brak działek. Dodaj pierwszą.</div>')
+ +'<button class="add" onclick="editP()">+ Dodaj działkę</button>';
+}
+function grants(){
+ return STAT.map(s=>{const l=S.grants.filter(g=>g.status===s);
+  return `<h2>${s==='otrzymana'?'Otrzymane':'Planowane'} <span class="mut">· ${zl(l.reduce((a,g)=>a+g.amount,0))}</span></h2>`
+  +(l.length?l.map(g=>`<div class="card row" onclick="goals('${g.id}')"><div><b>${esc(g.name)}</b><div class="mut">${g.year} · cele ${(g.goals||[]).filter(x=>x.d).length}/${(g.goals||[]).length}</div></div><span style="display:flex;gap:8px;align-items:center"><span class="pill ${s==='planowana'?'p':''}">${zl(g.amount)}</span><button class="ed" onclick="event.stopPropagation();editG('${g.id}')"><svg viewBox='0 0 24 24'><path d='M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z'/></svg></button></span></div>`).join(''):'<div class="empty">Pusto</div>')
+  +`<button class="add" onclick="editG(null,'${s}')">+ Dodaj</button>`}).join('');
+}
+function render(){
+ document.getElementById('ttl').textContent=S.name;document.title=S.name;document.documentElement.dataset.theme=S.theme||'auto';
+ document.getElementById('m').innerHTML={home,parcels,crops,buildings,grants,settings}[view]();
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===view));
+}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{view=b.dataset.v;render();scrollTo(0,0)});
+render();
+</script></body></html>
